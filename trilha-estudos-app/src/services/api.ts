@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 // ⚠️ ATENÇÃO: Substitua pelo endereço IPv4 da sua máquina na rede local.
@@ -11,11 +12,23 @@ export const api = axios.create({
   timeout: 10000, // 10 segundos de limite para não deixar o app travado em caso de erro
 });
 
-// Interceptors para injetar o JWT nas requisições:
-/*
+// Injetar o JWT nas requisições:
 api.interceptors.request.use(async (config) => {
-  // const token = await AsyncStorage.getItem('token');
-  // if (token) config.headers.Authorization = `Bearer ${token}`;
+  const token = await AsyncStorage.getItem('@trilhaestudos:token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 });
-*/
+
+// Tratar 401 (token expirado/inválido)
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      await AsyncStorage.removeItem('@trilhaestudos:token');
+      await AsyncStorage.removeItem('@trilhaestudos:user');
+    }
+    return Promise.reject(error);
+  }
+);

@@ -1,18 +1,5 @@
-/* import { Stack } from 'expo-router';
-import { THEME } from '../../src/theme/colors';
+import { Slot } from 'expo-router';
 
-export default function AppLayout() {
-  return (
-    <Stack
-      screenOptions={{
-        headerStyle: { backgroundColor: THEME.background },
-        headerTintColor: THEME.textPrimary,
-        headerTitleStyle: { fontWeight: '600' },
-        contentStyle: { backgroundColor: THEME.background },
-      }}
-    >
-      <Stack.Screen name="trilhas/index" options={{ title: 'Início', headerShown: false }} />
-      <Stack.Screen name="trilhas/[id]" options={{ title: 'Detalhes da Trilha' }} />
-    </Stack>
-  );
-} */
+export default function MainLayout() {
+  return <Slot />;
+}

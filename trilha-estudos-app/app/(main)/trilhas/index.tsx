@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet, StatusBar, Alert } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, StatusBar, Alert, TouchableOpacity } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
+import { Feather } from '@expo/vector-icons';
 import { Trilha } from '@/src/types/models';
 import { TrilhasService } from '@/src/services/trilhas';
 import { THEME } from '@/src/theme/colors';
 import { TrilhaCard } from '@/src/components/TrilhaCard';
 import { TrilhaFormModal } from '@/src/components/TrilhaFormModal';
 import { AddButton } from '@/src/components/AddButton';
+import { AuthService } from '@/src/services/auth';
 
 
 export default function Home() {
@@ -61,6 +63,24 @@ export default function Home() {
   function handleRefresh() {
     setRefreshing(true);
     carregarTrilhas();
+  }
+
+    async function handleLogout() {
+    Alert.alert(
+      "Sair",
+      "Tem certeza que deseja sair da sua conta?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Sair",
+          style: "destructive",
+          onPress: async () => {
+            await AuthService.logout();
+            router.replace('/(auth)/login' as any);
+          },
+        },
+      ]
+    );
   }
 
   async function handleExcluirTrilha(id: number, titulo: string) {
@@ -139,7 +159,15 @@ export default function Home() {
       
       <View style={styles.header}>
         <Text style={styles.title}>Trilhas Disponíveis</Text>
-        <AddButton onPress={handleOpenCreate} />
+        <View style={styles.headerActions}>
+          <AddButton onPress={handleOpenCreate} />
+          <TouchableOpacity 
+            onPress={handleLogout}
+            style={styles.logoutButton}
+          >
+            <Feather name="log-out" size={24} color={THEME.textPrimary} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <FlatList
@@ -197,6 +225,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 60, 
     paddingBottom: 20,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  logoutButton: {
+    padding: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: { 
     fontSize: 24, 
