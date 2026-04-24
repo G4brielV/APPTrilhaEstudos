@@ -1,19 +1,19 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { THEME } from '@/src/theme/colors';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
 
 
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
-export default function RootLayout() {
+export default function AppLayout() {
   return (
-    <Stack>
-      {}
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="[id]" options={{ headerShown: false }} />
+    <Stack
+      screenOptions={{
+        headerStyle: { backgroundColor: THEME.background },
+        headerTintColor: THEME.textPrimary,
+        headerTitleStyle: { fontWeight: '600' },
+        contentStyle: { backgroundColor: THEME.background },
+      }}
+    >
+      <Stack.Screen name="index" options={{ title: 'Início', headerShown: false }} />
+      <Stack.Screen name="trilhas/[id]" options={{ title: 'Detalhes da Trilha' }} />
     </Stack>
   );
 }

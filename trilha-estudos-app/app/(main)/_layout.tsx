@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+/* import { Stack } from 'expo-router';
 import { THEME } from '../../src/theme/colors';
 
 export default function AppLayout() {
@@ -15,4 +15,4 @@ export default function AppLayout() {
       <Stack.Screen name="trilhas/[id]" options={{ title: 'Detalhes da Trilha' }} />
     </Stack>
   );
-}
+} */
