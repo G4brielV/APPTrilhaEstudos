@@ -4,6 +4,19 @@ A full-stack mobile application for organizing and tracking study trails. Create
 
 ---
 
+## 📱 Screenshots
+
+<div align="center">
+  <img src="images/Login.png" width="200" alt="Login Screen" />
+  <img src="images/Register.png" width="200" alt="Register Screen" />
+  <img src="images/Trilhas.png" width="200" alt="Trilhas List" />
+  <img src="images/Trilhas2.png" width="200" alt="Trilhas Detail" />
+  <img src="images/AddTrilha.png" width="200" alt="Add Trilha Modal" />
+  <img src="images/Conteudos.png" width="200" alt="Conteudos Screen" />
+</div>
+
+---
+
 ## 🛠️ Technologies
 
 ### Backend
@@ -30,13 +43,23 @@ A full-stack mobile application for organizing and tracking study trails. Create
 
 ---
 
-## 🎨 About the UI
+## ⚙️ Core Features & Technical Highlights
 
-> **AI-assisted design** — Tools such as AI coding assistants were used to help design the interface layout and select the color palette. The dark theme (`#121214` background, `#00D287` primary accent) was refined with AI suggestions.
+### Pagination (Infinite Scrolling)
+To ensure high performance and low memory consumption on the mobile device, data fetching is fully paginated. 
+- **Backend:** The NestJS API handles pagination via query parameters (e.g., `?page=1&limit=10`), returning optimized database queries.
+- **Frontend:** The React Native app utilizes `FlatList` with `onEndReached` to fetch new pages automatically as the user scrolls, appending new items seamlessly without blocking the UI thread.
+
+### Reliable Status Toggle (Sync between Front/Back)
+To prevent UI inconsistencies ("deslink" between what the user sees and what is actually saved in the database), the completion toggle for study contents utilizes a strict synchronization strategy:
+- When a user toggles a content status, the frontend sends a specific action request to the backend.
+- The UI state only updates **after** receiving the successful confirmation and the updated state from the backend. This guarantees that the visual feedback matches the database reality, preventing ghost states.
+
+### AI-assisted UI & UX
+> Tools such as AI coding assistants were used to help design the interface layout and select the color palette. The dark theme (`#121214` background, `#00D287` primary accent) was refined with AI suggestions.
 >
 > **The main focus was on business logic and user experience (UX)**, including:
 > - Smooth swipe-to-delete gestures with haptic-style feedback
-> - Pull-to-refresh and infinite scrolling with pagination
 > - JWT-based auth flow with automatic session recovery on app startup
 > - Modal forms for creating/editing trails and content
 > - Progress tracking with visual completion indicators
@@ -233,8 +256,3 @@ To connect to the database from pgAdmin, add a new server with:
 - **User profile** — edit name, change password, avatar
 - **Push notifications** — reminders to continue studying
 
----
-
-## 📄 License
-
-This project is private and unlicensed.
