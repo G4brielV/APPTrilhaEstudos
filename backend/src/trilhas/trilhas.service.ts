@@ -1,13 +1,8 @@
-import { Global, Injectable, Module, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTrilhaDto } from './dto/create-trilha.dto';
 import { UpdateTrilhaDto } from './dto/update-trilha.dto';
 
-@Global()
-@Module({
-  providers: [PrismaService],
-  exports: [PrismaService], 
-})
 @Injectable()
 export class TrilhasService {
   private readonly USUARIO_FIXO_ID = 1;
